@@ -10,7 +10,7 @@ class CacheProvider extends ServiceProvider {
       return new Cache(Config);
     });
 
-    this.app.alias("Adonis/Addons/Cache", "Cache");
+    this.app.alias("Kaperskyguru/Adonis-Cache", "Cache");
   }
 }
 module.exports = CacheProvider;

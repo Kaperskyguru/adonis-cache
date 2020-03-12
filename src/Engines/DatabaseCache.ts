@@ -31,4 +31,4 @@ class DatabaseCache {
     return true;
   }
 }
-export default DatabaseCache;
+module.exports = DatabaseCache;

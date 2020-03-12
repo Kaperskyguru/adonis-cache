@@ -4,7 +4,6 @@ import ServiceInterface from "../Contracts/ServiceInterface";
 // @Implements<CacheInterface>()
 class Cache implements CacheInterface {
   private CacheEngine: ServiceInterface;
-  //   private defaultMinutes = 60;
   constructor(CacheEngine: ServiceInterface) {
     this.CacheEngine = CacheEngine;
   }
@@ -30,10 +29,6 @@ class Cache implements CacheInterface {
     if (name && data) {
       data = JSON.stringify(data);
       return await this.CacheEngine.set(name, data, duration);
-      //   if (duration == null) {
-      //     return await this._addCache(name, data);
-      //   }
-      //   return await this._addExpiredCache(name, data, duration);
     }
   }
 
@@ -70,16 +65,6 @@ class Cache implements CacheInterface {
       return data;
     }
   }
-
-  //   async _addExpiredCache(name, data, duration) {
-  //     await this.CacheEngine.set(name, data, "EX", duration);
-  //     return data;
-  //   }
-
-  //   async _addCache(name, data) {
-  //     await this.CacheEngine.set(name, data, duration);
-  //     return data;
-  //   }
 }
 
 export default Cache;

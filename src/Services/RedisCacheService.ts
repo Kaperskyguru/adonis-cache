@@ -1,4 +1,4 @@
-import ServiceInterface from "../Contracts/ServiceInterface";
+const { ServiceInterface } = require("../Contracts/ServiceInterface");
 const { RedisCache } = require("../Engines/RedisCache");
 
 class RedisCacheService extends RedisCache implements ServiceInterface {
@@ -68,4 +68,4 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     }
   }
 }
-export default RedisCacheService;
+module.exports = RedisCacheService;

@@ -1,5 +1,5 @@
-import ServiceInterface from "../Contracts/ServiceInterface";
-import DatabaseCache from "../Engines/DatabaseCache";
+const { ServiceInterface } = require("../Contracts/ServiceInterface");
+const { DatabaseCache } = require("../Engines/DatabaseCache");
 
 class DatabaseCacheService extends DatabaseCache implements ServiceInterface {
   constructor(config) {
@@ -78,4 +78,4 @@ class DatabaseCacheService extends DatabaseCache implements ServiceInterface {
   //     return data;
   //   }
 }
-export default DatabaseCacheService;
+module.exports = DatabaseCacheService;

@@ -31,4 +31,4 @@ class FileCache {
     return true;
   }
 }
-export default FileCache;
+module.exports = FileCache;

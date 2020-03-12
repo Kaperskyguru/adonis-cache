@@ -1,5 +1,5 @@
-import ServiceInterface from "../Contracts/ServiceInterface";
-import FileCache from "../Engines/FileCache";
+const { ServiceInterface } = require("../Contracts/ServiceInterface");
+const { FileCache } = require("../Engines/FileCache");
 
 class FileCacheService extends FileCache implements ServiceInterface {
   constructor(config) {
@@ -78,4 +78,4 @@ class FileCacheService extends FileCache implements ServiceInterface {
   //     return data;
   //   }
 }
-export default FileCacheService;
+module.exports = FileCacheService;

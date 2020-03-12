@@ -1,5 +1,5 @@
-import ServiceInterface from "../Contracts/ServiceInterface";
-import MemCache from "../Engines/MemCache";
+const { ServiceInterface } = require("../Contracts/ServiceInterface");
+const { MemCache } = require("../Engines/MemCache");
 
 class MemCacheService extends MemCache implements ServiceInterface {
   constructor(config) {
@@ -78,4 +78,4 @@ class MemCacheService extends MemCache implements ServiceInterface {
   //     return data;
   //   }
 }
-export default MemCacheService;
+module.exports = MemCacheService;

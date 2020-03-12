@@ -31,4 +31,4 @@ class MemCache {
     return true;
   }
 }
-export default MemCache;
+module.exports = MemCache;
