@@ -2,7 +2,7 @@ import CacheInterface from "../Contracts/CacheInterface";
 import ServiceInterface from "../Contracts/ServiceInterface";
 
 // @Implements<CacheInterface>()
-class Cache implements CacheInterface {
+class Kache implements CacheInterface {
   private CacheEngine: ServiceInterface;
   constructor(CacheEngine: ServiceInterface) {
     this.CacheEngine = CacheEngine;
@@ -67,4 +67,4 @@ class Cache implements CacheInterface {
   }
 }
 
-module.exports = Cache;
+module.exports = Kache;
