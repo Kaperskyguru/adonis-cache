@@ -1,14 +1,20 @@
 {
-  "name": "adonis-cache",
+  "name": "kap-adonis-cache",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Adonis Cache Package",
+  "main": "providers/CacheProvider",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "adonis",
+    "cache"
+  ],
+  "homepage": "https://github.com/kaperskyguru/adonis-cache#readme",
+  "author": {
+    "name": "kaperskyguru"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@adonisjs/ace": "^6.8.4",
     "@adonisjs/fold": "^4.0.7",

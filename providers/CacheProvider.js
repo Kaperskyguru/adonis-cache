@@ -4,7 +4,7 @@ const { ServiceProvider } = require("@adonisjs/fold");
 
 class CacheProvider extends ServiceProvider {
   register() {
-    this.app.singleton("Adonis/Addons/Cache", app => {
+    this.app.singleton("Kaperskyguru/Adonis-Cache", app => {
       const Config = app.use("Adonis/Src/Config");
       const Cache = require("../src/CacheLoader");
       return new Cache(Config);
