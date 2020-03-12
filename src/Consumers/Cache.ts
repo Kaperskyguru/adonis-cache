@@ -67,4 +67,4 @@ class Cache implements CacheInterface {
   }
 }
 
-export default Cache;
+module.exports = Cache;
