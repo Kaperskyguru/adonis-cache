@@ -1,10 +1,8 @@
-const { Cache } = require("../src/Consumers/Cache");
-const {
-  DatabaseCacheService
-} = require("../src/Services/DatabaseCacheService");
-const { FileCacheService } = require("../src/Services/FileCacheService");
-const { RedisCacheService } = require("../src/Services/RedisCacheService");
-const { MemCacheService } = require("../src/Services/MemCacheService");
+import { Cache } from "../src/Consumers/Cache";
+import { DatabaseCacheService } from "../src/Services/DatabaseCacheService";
+import { FileCacheService } from "../src/Services/FileCacheService";
+import { RedisCacheService } from "../src/Services/RedisCacheService";
+import { MemCacheService } from "../src/Services/MemCacheService";
 
 class CacheLoader {
   cacheDriver = "file";
