@@ -1,12 +1,15 @@
-// const DatabaseCache = use("DatabaseCache");
+// const FileCache = use("FileCache");
 
 class FileCache {
   private defaultMinutes = 60;
 
-  constructor(config) {}
-  public async get(name) {
+  constructor(config: any) {
+    console.log(config);
+  }
+  public async get(name: String): Promise<any> {
     if (name) {
-      // Implement Database get here
+      // Implement File get here
+      console.log(name);
       const value = "";
       if (value) {
         return JSON.parse(value);
@@ -14,8 +17,13 @@ class FileCache {
     }
   }
 
-  public async set(name, data, duration = this.defaultMinutes) {
+  public async set(
+    name: String,
+    data: any,
+    duration: Number = this.defaultMinutes
+  ): Promise<any> {
     if (name && data) {
+      console.log(name, data, duration);
       // Implement Set method
       //   data = JSON.stringify(data);
       //   if (duration == null) {
@@ -25,10 +33,10 @@ class FileCache {
     }
   }
 
-  public async delete(name) {
+  public async delete(name: String): Promise<any> {
     // Implement Delete function
-
+    console.log(name);
     return true;
   }
 }
-module.exports = FileCache;
+export default FileCache;

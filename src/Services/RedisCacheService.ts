@@ -1,21 +1,21 @@
-const { ServiceInterface } = require("../Contracts/ServiceInterface");
-const { RedisCache } = require("../Engines/RedisCache");
+import ServiceInterface from "../Contracts/ServiceInterface";
+import RedisCache from "../Engines/RedisCache";
 
 class RedisCacheService extends RedisCache implements ServiceInterface {
-  constructor(config) {
+  constructor(config: any) {
     super(config);
   }
 
-  public async get(name) {
+  public async get(name: String): Promise<any> {
     if (name) {
-      const value = await super.get(name);
+      const value: string = await super.get(name);
       if (value) {
         return JSON.parse(value);
       }
     }
   }
 
-  public async has(name) {
+  public async has(name: String): Promise<Boolean> {
     const value = await this.get(name);
     if (value == null) {
       return false;
@@ -23,7 +23,7 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     return true;
   }
 
-  public async set(name, data, duration) {
+  public async set(name: String, data: any, duration: Number): Promise<any> {
     if (name && data) {
       data = JSON.stringify(data);
       return await super.set(name, data, duration);
@@ -34,7 +34,7 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     }
   }
 
-  public async delete(name) {
+  public async delete(name: String): Promise<Boolean> {
     if (await this.has(name)) {
       await super.delete(name);
       return true;
@@ -42,13 +42,17 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     return false;
   }
 
-  public async update(name, data, duration) {
+  public async update(name: String, data: any, duration: Number): Promise<any> {
     if (await this.delete(name)) {
       return await this.set(name, data, duration);
     } else return await this.set(name, data, duration);
   }
 
-  async remember(name, duration, callback) {
+  async remember(
+    name: String,
+    duration: Number,
+    callback: Function
+  ): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
@@ -58,12 +62,12 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     }
   }
 
-  public async rememberForever(name, callback) {
+  public async rememberForever(name: String, callback: Function): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
       const data = await callback();
-      await this.set(name, data, null);
+      await this.set(name, data, 50000000000000);
       return data;
     }
   }

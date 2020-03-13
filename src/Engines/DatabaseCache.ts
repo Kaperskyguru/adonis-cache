@@ -3,10 +3,13 @@
 class DatabaseCache {
   private defaultMinutes = 60;
 
-  constructor(config) {}
-  public async get(name) {
+  constructor(config: any) {
+    console.log(config);
+  }
+  public async get(name: String): Promise<any> {
     if (name) {
       // Implement Database get here
+      console.log(name);
       const value = "";
       if (value) {
         return JSON.parse(value);
@@ -14,9 +17,14 @@ class DatabaseCache {
     }
   }
 
-  public async set(name, data, duration = this.defaultMinutes) {
+  public async set(
+    name: String,
+    data: any,
+    duration: Number = this.defaultMinutes
+  ): Promise<any> {
     if (name && data) {
       // Implement Set method
+      console.log(name, data, duration);
       //   data = JSON.stringify(data);
       //   if (duration == null) {
       //     return await this._addCache(name, data);
@@ -25,10 +33,11 @@ class DatabaseCache {
     }
   }
 
-  public async delete(name) {
+  public async delete(name: String): Promise<any> {
     // Implement Delete function
+    console.log(name);
 
     return true;
   }
 }
-module.exports = DatabaseCache;
+export default DatabaseCache;

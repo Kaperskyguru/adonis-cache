@@ -9,14 +9,14 @@ const { MemCacheService } = require("../src/Services/MemCacheService");
 class CacheLoader {
   cacheDriver = "file";
   private config: any;
-  constructor(Config) {
+  constructor(Config: any) {
     this.config = Config.merge("cache", {
       cacheDriver: this.cacheDriver
     });
     this.initialize(this.config);
   }
 
-  initialize(config) {
+  initialize(config: any) {
     switch (config.cacheDriver.toLowerCase()) {
       case "memcache":
         // Load MemCacheService

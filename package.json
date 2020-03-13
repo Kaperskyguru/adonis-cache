@@ -1,10 +1,14 @@
 {
   "name": "kap-adonis-cache",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Adonis Cache Package",
-  "main": "providers/CacheProvider",
+  "main": "build/providers/CacheProvider",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "clean": "del build",
+    "compile": " npm run clean && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "keywords": [
     "adonis",
@@ -24,7 +28,13 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3",
     "mrm": "^2.1.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "@adonisjs/mrm-preset": "^2.2.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "build/providers",
+    "build/src",
+    "build/config"
+  ]
 }

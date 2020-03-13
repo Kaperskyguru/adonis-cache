@@ -8,7 +8,7 @@ class Kache implements CacheInterface {
     this.CacheEngine = CacheEngine;
   }
 
-  public async get(name) {
+  public async get(name: String): Promise<any> {
     if (name) {
       const value = await this.CacheEngine.get(name);
       if (value) {
@@ -17,7 +17,7 @@ class Kache implements CacheInterface {
     }
   }
 
-  public async has(name) {
+  public async has(name: String): Promise<Boolean> {
     const value = await this.CacheEngine.get(name);
     if (value == null) {
       return false;
@@ -25,28 +25,33 @@ class Kache implements CacheInterface {
     return true;
   }
 
-  public async set(name, data, duration) {
+  public async set(name: String, data: any, duration: Number): Promise<any> {
     if (name && data) {
       data = JSON.stringify(data);
       return await this.CacheEngine.set(name, data, duration);
     }
   }
 
-  public async delete(name) {
+  public async delete(name: String): Promise<Boolean> {
     if (await this.has(name)) {
       await this.CacheEngine.delete(name);
       return true;
     }
+    return false;
   }
 
-  public async update(name, data, duration) {
+  public async update(name: String, data: any, duration: Number): Promise<any> {
     if (await this.has(name)) {
       await this.delete(name);
       return await this.set(name, data, duration);
     } else return await this.set(name, data, duration);
   }
 
-  async remember(name, duration, callback) {
+  async remember(
+    name: String,
+    duration: Number,
+    callback: Function
+  ): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
@@ -56,12 +61,12 @@ class Kache implements CacheInterface {
     }
   }
 
-  public async rememberForever(name, callback) {
+  public async rememberForever(name: String, callback: Function): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
       const data = await callback();
-      await this.set(name, data, null);
+      await this.set(name, data, 5888888888888);
       return data;
     }
   }
