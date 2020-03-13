@@ -1,4 +1,4 @@
-const { Kache } = require("../src/Consumers/Kache");
+const { Cache } = require("../src/Consumers/Cache");
 const {
   DatabaseCacheService
 } = require("../src/Services/DatabaseCacheService");
@@ -20,22 +20,22 @@ class CacheLoader {
     switch (config.cacheDriver.toLowerCase()) {
       case "memcache":
         // Load MemCacheService
-        new Kache(new MemCacheService(config));
+        new Cache(new MemCacheService(config));
         break;
 
       case "redis":
         // Load RedisCacheService
-        new Kache(new RedisCacheService(config));
+        new Cache(new RedisCacheService(config));
         break;
 
       case "database":
         // Load DatabaseCacheService
-        new Kache(new DatabaseCacheService(config));
+        new Cache(new DatabaseCacheService(config));
         break;
 
       default:
         // Load FileCacheService
-        new Kache(new FileCacheService(config));
+        new Cache(new FileCacheService(config));
         break;
     }
   }
