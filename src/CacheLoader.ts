@@ -1,4 +1,4 @@
-const { Cache } = require("../src/Consumers/Cache");
+const Cache = require("../src/Consumers/Cache");
 const DatabaseCacheService = require("../src/Services/DatabaseCacheService");
 const FileCacheService = require("../src/Services/FileCacheService");
 const RedisCacheService = require("../src/Services/RedisCacheService");
@@ -31,7 +31,6 @@ class CacheLoader {
         break;
 
       case "redis":
-        console.log(this.app);
         // Load RedisCacheService
         new Cache(new RedisCacheService(this.app));
         break;

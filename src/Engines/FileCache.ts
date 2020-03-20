@@ -1,10 +1,12 @@
+import CacheInterface from "../Contracts/CacheInterface";
+
 // const FileCache = use("FileCache");
 
-class FileCache {
+class FileCache implements CacheInterface {
   private defaultMinutes = 60;
 
-  constructor(config: any) {
-    console.log(config);
+  constructor(app: any) {
+    console.log(app);
   }
   public async get(name: String): Promise<any> {
     if (name) {
@@ -31,6 +33,10 @@ class FileCache {
       //   }
       //   return await this._addExpiredCache(name, data, duration);
     }
+  }
+
+  flush(): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 
   public async delete(name: String): Promise<any> {
