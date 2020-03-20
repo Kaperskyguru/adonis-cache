@@ -1,13 +1,11 @@
 const { Cache } = require("../src/Consumers/Cache");
-const {
-  DatabaseCacheService
-} = require("../src/Services/DatabaseCacheService");
-const { FileCacheService } = require("../src/Services/FileCacheService");
-const { RedisCacheService } = require("../src/Services/RedisCacheService");
-const { MemCacheService } = require("../src/Services/MemCacheService");
+const DatabaseCacheService = require("../src/Services/DatabaseCacheService");
+const FileCacheService = require("../src/Services/FileCacheService");
+const RedisCacheService = require("../src/Services/RedisCacheService");
+const MemCacheService = require("../src/Services/MemCacheService");
 
 class CacheLoader {
-  cacheDriver = "file";
+  cacheDriver = "redis";
   private app: any;
 
   constructor(App: any) {

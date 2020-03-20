@@ -1,6 +1,6 @@
 {
   "name": "kap-adonis-cache",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Adonis Cache Package",
   "main": "build/providers/CacheProvider",
   "scripts": {
