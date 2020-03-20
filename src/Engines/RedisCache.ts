@@ -1,17 +1,16 @@
-const { Redis } = require("@adonisjs/redis");
-
 class RedisCache {
   private defaultMinutes = 60;
-
-  constructor(config: any) {
-    console.log(config);
+  private Redis: any;
+  constructor(app: any) {
+    const { Redis } = app.use("Adonis/Addons/Redis");
+    console.log(app);
     if (!Redis) throw "Cannot find Redis driver";
   }
 
   public async get(name: String): Promise<any> {
     if (name) {
       // Implement Database get here
-      const value = await Redis.get(name);
+      const value = await this.Redis.get(name);
       if (value) {
         return JSON.parse(value);
       }
@@ -35,7 +34,7 @@ class RedisCache {
 
   public async delete(name: String): Promise<Boolean> {
     // Implement Delete function
-    await Redis.del(name);
+    await this.Redis.del(name);
     return true;
   }
 
@@ -44,12 +43,12 @@ class RedisCache {
     data: any,
     duration: Number
   ): Promise<any> {
-    await Redis.set(name, data, "EX", duration);
+    await this.Redis.set(name, data, "EX", duration);
     return data;
   }
 
   private async _addCache(name: String, data: any): Promise<any> {
-    await Redis.set(name, data);
+    await this.Redis.set(name, data);
     return data;
   }
 }

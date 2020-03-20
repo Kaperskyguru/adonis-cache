@@ -1,11 +1,11 @@
 {
   "name": "kap-adonis-cache",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Adonis Cache Package",
   "main": "build/providers/CacheProvider",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "clean": "del build",
+    "clean": "rm -r build",
     "compile": " npm run clean && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"

@@ -9,8 +9,11 @@ const { MemCacheService } = require("../src/Services/MemCacheService");
 class CacheLoader {
   cacheDriver = "file";
   private config: any;
-  constructor(Config: any) {
-    this.config = Config.merge("cache", {
+  private app: any;
+
+  constructor(App: any) {
+    this.app = App;
+    this.config = App.config.merge("cache", {
       cacheDriver: this.cacheDriver
     });
     this.initialize(this.config);
@@ -20,22 +23,23 @@ class CacheLoader {
     switch (config.cacheDriver.toLowerCase()) {
       case "memcache":
         // Load MemCacheService
-        new Cache(new MemCacheService(config));
+        new Cache(new MemCacheService(this.app));
         break;
 
       case "redis":
+        console.log(this.app, config);
         // Load RedisCacheService
-        new Cache(new RedisCacheService(config));
+        new Cache(new RedisCacheService(this.app));
         break;
 
       case "database":
         // Load DatabaseCacheService
-        new Cache(new DatabaseCacheService(config));
+        new Cache(new DatabaseCacheService(this.app));
         break;
 
       default:
         // Load FileCacheService
-        new Cache(new FileCacheService(config));
+        new Cache(new FileCacheService(this.app));
         break;
     }
   }

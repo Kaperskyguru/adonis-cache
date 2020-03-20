@@ -2,8 +2,8 @@ import ServiceInterface from "../Contracts/ServiceInterface";
 import RedisCache from "../Engines/RedisCache";
 
 class RedisCacheService extends RedisCache implements ServiceInterface {
-  constructor(config: any) {
-    super(config);
+  constructor(app: any) {
+    super(app);
   }
 
   public async get(name: String): Promise<any> {
