@@ -8,26 +8,32 @@ const { MemCacheService } = require("../src/Services/MemCacheService");
 
 class CacheLoader {
   cacheDriver = "file";
-  private config: any;
   private app: any;
 
   constructor(App: any) {
     this.app = App;
-    this.config = App.config.merge("cache", {
-      cacheDriver: this.cacheDriver
-    });
-    this.initialize(this.config);
+    this._setConfig("driver", this.cacheDriver);
+    this.initialize(this._getConfig("driver"));
   }
-
-  initialize(config: any) {
-    switch (config.cacheDriver.toLowerCase()) {
+  _getConfig(name: String) {
+    return this.app.use("Adonis/Src/Config").get(`cache.${name}`);
+  }
+  _setConfig(name: String, value: any) {
+    const config = this._getConfig(name);
+    if (config) {
+      return;
+    }
+    this.app.use("Adonis/Src/Config").set(`cache.${name}`, value);
+  }
+  initialize(driver: String) {
+    switch (driver.toLowerCase()) {
       case "memcache":
         // Load MemCacheService
         new Cache(new MemCacheService(this.app));
         break;
 
       case "redis":
-        console.log(this.app, config);
+        console.log(this.app);
         // Load RedisCacheService
         new Cache(new RedisCacheService(this.app));
         break;
