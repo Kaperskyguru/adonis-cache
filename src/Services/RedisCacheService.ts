@@ -48,43 +48,8 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
     } else return await this.set(name, data, duration);
   }
 
-  async remember(
-    name: string,
-    duration: number,
-    callback: Function
-  ): Promise<any> {
-    if (await this.has(name)) {
-      return await this.get(name);
-    } else {
-      const data = await callback();
-      await this.set(name, data, duration);
-      return data;
-    }
-  }
-
-  public async rememberForever(name: string, callback: Function): Promise<any> {
-    if (await this.has(name)) {
-      return await this.get(name);
-    } else {
-      const data = await callback();
-      await this.set(name, data, 0);
-      return data;
-    }
-  }
-
-  public async many(keys: Array<string>): Promise<object> {
-    let values = Promise.all(keys.map((key: string) => this.get(key)));
-    let mappedValues: object = {};
-    for (let index: number = 0; index < keys.length; index++) {
-      mappedValues[keys[index]] = values[index];
-    }
-    return mappedValues;
-  }
-
-  public async setMany(data: object, minutes: number) {
-    for (let prop in data) {
-      await this.set(prop, data[prop], minutes);
-    }
+  public async flush(): Promise<void> {
+    await super.flush();
   }
 }
 module.exports = RedisCacheService;

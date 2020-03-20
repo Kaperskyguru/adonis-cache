@@ -1,16 +1,15 @@
-import CacheInterface from "../Contracts/CacheInterface";
 import ServiceInterface from "../Contracts/ServiceInterface";
 
 // @Implements<CacheInterface>()
-class Cache implements CacheInterface {
-  private CacheEngine: ServiceInterface;
-  constructor(CacheEngine: ServiceInterface) {
-    this.CacheEngine = CacheEngine;
+class Cache {
+  private CacheService: ServiceInterface;
+  constructor(cacheService: ServiceInterface) {
+    this.CacheService = cacheService;
   }
 
   public async get(name: String): Promise<any> {
     if (name) {
-      const value = await this.CacheEngine.get(name);
+      const value = await this.CacheService.get(name);
       if (value) {
         return JSON.parse(value);
       }
@@ -18,7 +17,7 @@ class Cache implements CacheInterface {
   }
 
   public async has(name: String): Promise<Boolean> {
-    const value = await this.CacheEngine.get(name);
+    const value = await this.CacheService.get(name);
     if (value == null) {
       return false;
     }
@@ -28,13 +27,13 @@ class Cache implements CacheInterface {
   public async set(name: String, data: any, duration: Number): Promise<any> {
     if (name && data) {
       data = JSON.stringify(data);
-      return await this.CacheEngine.set(name, data, duration);
+      return await this.CacheService.set(name, data, duration);
     }
   }
 
   public async delete(name: String): Promise<Boolean> {
     if (await this.has(name)) {
-      await this.CacheEngine.delete(name);
+      await this.CacheService.delete(name);
       return true;
     }
     return false;
@@ -48,8 +47,8 @@ class Cache implements CacheInterface {
   }
 
   async remember(
-    name: String,
-    duration: Number,
+    name: string,
+    duration: number,
     callback: Function
   ): Promise<any> {
     if (await this.has(name)) {
@@ -61,14 +60,30 @@ class Cache implements CacheInterface {
     }
   }
 
-  public async rememberForever(name: String, callback: Function): Promise<any> {
+  public async rememberForever(name: string, callback: Function): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
       const data = await callback();
-      await this.set(name, data, 5888888888888);
+      await this.set(name, data, 0);
       return data;
     }
+  }
+
+  public async many(keys: Array<string>): Promise<object> {
+    let values = Promise.all(keys.map((key: string) => this.get(key)));
+    let mappedValues: object = {};
+    for (let index: number = 0; index < keys.length; index++) {
+      mappedValues[keys[index]] = values[index];
+    }
+    return mappedValues;
+  }
+
+  public async setMany(data: object, minutes: number) {
+    for (let prop in data) {
+      await this.set(prop, data[prop], minutes);
+    }
+    return;
   }
 }
 
