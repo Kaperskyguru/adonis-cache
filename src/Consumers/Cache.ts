@@ -2,12 +2,12 @@ import ServiceInterface from "../Contracts/ServiceInterface";
 
 // @Implements<CacheInterface>()
 class Cache {
-  private static CacheService: ServiceInterface;
+  private CacheService: ServiceInterface;
   constructor(cacheService: ServiceInterface) {
-    Cache.CacheService = cacheService;
+    this.CacheService = cacheService;
   }
 
-  public static async get(name: String): Promise<any> {
+  public async get(name: string): Promise<any> {
     if (name) {
       const value = await this.CacheService.get(name);
       if (value) {
@@ -16,7 +16,7 @@ class Cache {
     }
   }
 
-  public static async has(name: String): Promise<Boolean> {
+  public async has(name: string): Promise<Boolean> {
     const value = await this.CacheService.get(name);
     if (value == null) {
       return false;
@@ -24,18 +24,14 @@ class Cache {
     return true;
   }
 
-  public static async set(
-    name: String,
-    data: any,
-    duration: Number
-  ): Promise<any> {
+  public async set(name: string, data: any, duration: number): Promise<any> {
     if (name && data) {
       data = JSON.stringify(data);
       return await this.CacheService.set(name, data, duration);
     }
   }
 
-  public static async delete(name: String): Promise<Boolean> {
+  public async delete(name: string): Promise<Boolean> {
     if (await this.has(name)) {
       await this.CacheService.delete(name);
       return true;
@@ -43,18 +39,14 @@ class Cache {
     return false;
   }
 
-  public static async update(
-    name: String,
-    data: any,
-    duration: number
-  ): Promise<any> {
+  public async update(name: string, data: any, duration: number): Promise<any> {
     if (await this.has(name)) {
       await this.delete(name);
       return await this.set(name, data, duration);
     } else return await this.set(name, data, duration);
   }
 
-  public static async remember(
+  public async remember(
     name: string,
     duration: number,
     callback: Function
@@ -68,10 +60,7 @@ class Cache {
     }
   }
 
-  public static async rememberForever(
-    name: string,
-    callback: Function
-  ): Promise<any> {
+  public async rememberForever(name: string, callback: Function): Promise<any> {
     if (await this.has(name)) {
       return await this.get(name);
     } else {
@@ -81,7 +70,7 @@ class Cache {
     }
   }
 
-  public static async many(keys: Array<string>): Promise<object> {
+  public async many(keys: Array<string>): Promise<object> {
     let values = Promise.all(keys.map((key: string) => this.get(key)));
     let mappedValues: object = {};
     for (let index: number = 0; index < keys.length; index++) {
@@ -90,7 +79,7 @@ class Cache {
     return mappedValues;
   }
 
-  public static async setMany(data: object, minutes: number) {
+  public async setMany(data: object, minutes: number) {
     for (let prop in data) {
       await this.set(prop, data[prop], minutes);
     }

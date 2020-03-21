@@ -11,7 +11,6 @@ class CacheLoader {
   constructor(App: any) {
     this.app = App;
     this._setConfig("driver", this.cacheDriver);
-    this.initialize(this._getConfig("driver"));
   }
   _getConfig(name: String) {
     return this.app.use("Adonis/Src/Config").get(`cache.${name}`);
@@ -23,28 +22,31 @@ class CacheLoader {
     }
     this.app.use("Adonis/Src/Config").set(`cache.${name}`, value);
   }
-  initialize(driver: String) {
+  createCache() {
+    const driver: string = this._getConfig("driver");
+    let cache: any;
     switch (driver.toLowerCase()) {
       case "memcache":
         // Load MemCacheService
-        new Cache(new MemCacheService(this.app));
+        cache = new Cache(new MemCacheService(this.app));
         break;
 
       case "redis":
         // Load RedisCacheService
-        new Cache(new RedisCacheService(this.app));
+        cache = new Cache(new RedisCacheService(this.app));
         break;
 
       case "database":
         // Load DatabaseCacheService
-        new Cache(new DatabaseCacheService(this.app));
+        cache = new Cache(new DatabaseCacheService(this.app));
         break;
 
       default:
         // Load FileCacheService
-        new Cache(new FileCacheService(this.app));
+        cache = new Cache(new FileCacheService(this.app));
         break;
     }
+    return cache;
   }
 }
 
