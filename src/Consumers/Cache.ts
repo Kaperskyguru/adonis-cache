@@ -9,10 +9,7 @@ class Cache {
 
   public async get(name: string): Promise<any> {
     if (name) {
-      const value = await this.CacheService.get(name);
-      if (value) {
-        return JSON.parse(value);
-      }
+      return await this.CacheService.get(name);
     }
   }
 
@@ -26,7 +23,6 @@ class Cache {
 
   public async set(name: string, data: any, duration: number): Promise<any> {
     if (name && data) {
-      data = JSON.stringify(data);
       return await this.CacheService.set(name, data, duration);
     }
   }
