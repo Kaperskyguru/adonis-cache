@@ -1,17 +1,17 @@
-"use strict";
+'use strict'
 
-const { ServiceProvider } = require("@adonisjs/fold");
+import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 
-class CacheProvider extends ServiceProvider {
-  public register() {
-    this.app.singleton("Kaperskyguru/Adonis-Cache", app => {
-      // const Config = app.use("Adonis/Src/Config");
-      const CacheLoader = require("../src/CacheLoader");
-      return new CacheLoader(app).createCache();
-    });
+export default class CacheProvider {
+	constructor(protected app: ApplicationContract) {}
+	public register() {
+		this.app.container.singleton('Kaperskyguru/Adonis-Cache', () => {
+			const CacheLoader = require('../src/CacheLoader')
+			return new CacheLoader(this.app).createCache()
+		})
 
-    this.app.alias("Kaperskyguru/Adonis-Cache", "Cache");
-  }
+		this.app.container.alias('Kaperskyguru/Adonis-Cache', 'Cache')
+	}
 }
 
-module.exports = CacheProvider;
+module.exports = CacheProvider

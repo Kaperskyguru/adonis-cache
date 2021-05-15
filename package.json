@@ -1,40 +1,66 @@
 {
-  "name": "kap-adonis-cache",
-  "version": "2.0.4",
-  "description": "Adonis Cache Package",
-  "main": "build/providers/CacheProvider",
-  "scripts": {
-    "mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "clean": "rm -r build",
-    "compile": " npm run clean && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
-  "keywords": [
-    "adonis",
-    "cache"
-  ],
-  "homepage": "https://github.com/kaperskyguru/adonis-cache#readme",
-  "author": {
-    "name": "kaperskyguru"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@adonisjs/ace": "^6.8.4",
-    "@adonisjs/fold": "^4.0.7",
-    "@adonisjs/framework": "^5.0.6",
-    "@adonisjs/redis": "^2.0.7",
-    "@types/node": "^13.7.7",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3",
-    "mrm": "^2.1.0",
-    "reflect-metadata": "^0.1.13",
-    "@adonisjs/mrm-preset": "^2.2.4"
-  },
-  "dependencies": {},
-  "files": [
-    "build/providers",
-    "build/src",
-    "build/config"
-  ]
+	"name": "kap-adonis-cache",
+	"version": "2.0.5",
+	"description": "Adonis Cache Package",
+	"main": "build/providers/CacheProvider",
+	"scripts": {
+		"mrm": "mrm --preset=@adonisjs/mrm-preset",
+		"clean": "rm -r build",
+		"compile": "npm run clean && tsc",
+		"build": "npm run compile && npm run copyfiles",
+		"pretest": "npm run lint",
+		"test": "node japaFile.js",
+		"copyfiles": "copyfiles \"README.md\" \"npm-audit.html\" \"instructions.js\" \"instructions.md\" build",
+		"prepublishOnly": "npm run build",
+		"lint": "eslint . --ext=.ts",
+		"format": "prettier --write .",
+		"commit": "git-cz",
+		"release": "np",
+		"version": "npm run build",
+		"sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json Kaperskyguru/adonis-cache"
+	},
+	"keywords": [
+		"adonis",
+		"cache"
+	],
+	"homepage": "https://github.com/kaperskyguru/adonis-cache#readme",
+	"author": {
+		"name": "kaperskyguru"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@adonisjs/core": "^5.1.6",
+		"@adonisjs/mrm-preset": "^2.4.0",
+		"@types/node": "^13.13.52",
+		"copyfiles": "^2.4.1",
+		"doctoc": "^2.0.0",
+		"eslint": "^7.5.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-adonis": "^1.0.14",
+		"eslint-plugin-prettier": "^3.1.4",
+		"github-label-sync": "^2.0.0",
+		"husky": "^6.0.0",
+		"mrm": "^2.6.2",
+		"np": "^7.5.0",
+		"reflect-metadata": "^0.1.13",
+		"ts-node": "^8.6.2",
+		"typescript": "^3.9.9"
+	},
+	"files": [
+		"build/adonis-typings",
+		"build/providers",
+		"build/src",
+		"build/config"
+	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html && doctoc README.md --title='## Table of contents' && git add README.md",
+			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+		}
+	},
+	"types": "build/adonis-typings/index.d.ts",
+	"np": {
+		"contents": ".",
+		"anyBranch": false
+	}
 }

@@ -24,24 +24,24 @@ After installation, you need to register the providers inside start/app.js file.
 start/app.js
 
 const providers = [
-  ...,
-  'adonis-cache/providers/CacheProvider'
+...,
+'adonis-cache/providers/CacheProvider'
 ]
 
 Also, for registering commands.
 start/app.js
 
 const aceProviders = [
-  ...,
-  'adonis-cache/providers/CommandsProvider'
+...,
+'adonis-cache/providers/CommandsProvider'
 ]
 
 Also, it is a good practice to setup an alias to avoid typing the complete namespace.
 start/app.js
 
 const aliases = {
-  ...,
-  Cache: 'Adonis/Addons/Cache'
+...,
+Cache: 'Adonis/Addons/Cache'
 }
 
 Then, for generating a config file.
@@ -60,9 +60,9 @@ Database
 When using the database cache driver, you will need to setup a table to contain the cache items. You'll find an example Schema declaration for the table below:
 
 this.create('cache', (table) => {
-  table.string('key').unique()
-  table.text('value')
-  table.integer('expiration')
+table.string('key').unique()
+table.text('value')
+table.integer('expiration')
 })
 
     {tip} You may also use the adonis cache:table Ace command to generate a migration with the proper schema.
@@ -83,11 +83,12 @@ const Cache = use('Cache')
 
 class UserController {
 
-  async index(request, response) {
-    const value = await Cache.get('key')
+async index(request, response) {
+const value = await Cache.get('key')
 
     //
-  }
+
+}
 }
 
 ## Accessing Multiple Cache Stores
@@ -109,24 +110,24 @@ value = await Cache.get('key', 'default')
 You may even pass a Closure as the default value. The result of the Closure will be returned if the specified item does not exist in the cache. Passing a Closure allows you to defer the retrieval of default values from a database or other external service:
 
 value = await Cache.get('key', async () => {
-  return await Database.table(...).where(...).first()
+return await Database.table(...).where(...).first()
 })
 
 Retrieving multiple items:
 
 values = await Cache.many(['key1', 'key2', 'key3'])
-//  values = {
-//    key1: value,
-//    key2: value,
-//    key3: value
-//  }
+// values = {
+// key1: value,
+// key2: value,
+// key3: value
+// }
 
 Checking For Item Existence
 
 The has method may be used to determine if an item exists in the cache:
 
 if (await Cache.has('key')) {
-  //
+//
 }
 
 Incrementing / Decrementing Values
@@ -143,7 +144,7 @@ Retrieve & Store
 Sometimes you may wish to retrieve an item from the cache, but also store a default value if the requested item doesn't exist. For example, you may wish to retrieve all users from the cache or, if they don't exist, retrieve them from the database and add them to the cache. You may do this using the Cache.remember method:
 
 value = await Cache.remember('key', minutes, async () => {
-  return await Database.table(...).where(...).first()
+return await Database.table(...).where(...).first()
 })
 
 If the item does not exist in the cache, the Closure passed to the remember method will be executed and its result will be placed in the cache.
@@ -168,9 +169,9 @@ await Cache.put('key', 'value', expiresAt)
 Storing multiple items:
 
 const items = {
-  key1: 'value1',
-  key2: 'value2',
-  key3: 'value3'
+key1: 'value1',
+key2: 'value2',
+key3: 'value3'
 }
 
 await Cache.putMany(items, minutes)
@@ -237,4 +238,3 @@ Cache.hit
 Cache.missed
 Cache.keyForgotten
 Cache.keyWritten
-

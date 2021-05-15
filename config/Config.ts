@@ -1,3 +1,3 @@
 module.exports = {
-  cacheDriver: "file"
-};
+	cacheDriver: 'file',
+}
