@@ -1,6 +1,6 @@
 {
   "name": "@kaperskyguru/adonis-cache",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Adonis Cache Package",
   "main": "build/providers/CacheProvider",
   "scripts": {
@@ -62,7 +62,6 @@
     "contents": ".",
     "anyBranch": false
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kaperskyguru/kap-adonis-cache.git"
