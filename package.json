@@ -61,7 +61,7 @@
 	},
 	"types": "build/adonis-typings/index.d.ts",
 	"np": {
-		"contents": "build/",
+		"contents": ".",
 		"anyBranch": false
 	}
 }
