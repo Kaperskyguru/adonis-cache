@@ -9,7 +9,7 @@
 		"compile": "npm run clean && tsc",
 		"build": "npm run compile && npm run copyfiles",
 		"pretest": "npm run lint",
-		"test": "node japaFile.js",
+		"test": "echo ''",
 		"copyfiles": "copyfiles \"README.md\" \"npm-audit.html\" \"instructions.js\" \"instructions.md\" build",
 		"prepublishOnly": "npm run build",
 		"lint": "eslint . --ext=.ts",
