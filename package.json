@@ -1,12 +1,12 @@
 {
 	"name": "@kaperskyguru/adonis-cache",
-	"version": "2.0.8",
+	"version": "2.0.8-0",
 	"description": "Adonis Cache Package",
 	"main": "build/providers/CacheProvider",
 	"scripts": {
 		"mrm": "mrm --preset=@adonisjs/mrm-preset",
 		"clean": "rm -r build",
-		"compile": "npm run clean && tsc && copyfiles",
+		"compile": "npm run clean && tsc",
 		"build": "npm run compile && npm run copyfiles",
 		"pretest": "npm run lint",
 		"test": "echo ''",
