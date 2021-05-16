@@ -10,7 +10,7 @@
 		"build": "npm run compile && npm run copyfiles",
 		"pretest": "npm run lint",
 		"test": "echo ''",
-		"copyfiles": "copyfiles \"README.md\" \"templates/**/*.txt\" \"npm-audit.html\" \"instructions.js\" \"instructions.md\" build",
+		"copyfiles": "copyfiles \"README.md\" \"templates/**/*.txt\" \"instructions.md\" build",
 		"prepublishOnly": "npm run build",
 		"lint": "eslint . --ext=.ts",
 		"format": "prettier --write .",
@@ -50,7 +50,8 @@
 		"build/adonis-typings",
 		"build/providers",
 		"build/src",
-		"build/config"
+		"build/config",
+		"build/instructions.js"
 	],
 	"husky": {
 		"hooks": {
@@ -79,6 +80,7 @@
 		"access": "public"
 	},
 	"adonisjs": {
+		"instructions": "./build/instructions.js",
 		"instructionsMd": "./build/instructions.md",
 		"types": "@kaperskyguru/adonis-cache",
 		"providers": [
