@@ -5,7 +5,7 @@ class RedisCache implements CacheInterface {
 	private Redis: any
 
 	constructor(app: any) {
-		this.Redis = app.use('Adonis/Addons/Redis')
+		this.Redis = app.container.use('Adonis/Addons/Redis')
 		if (this.Redis === null) throw new Error(`InvalidArgumentException: Adonis Redis not installed`)
 	}
 

@@ -95,5 +95,18 @@
 				"cache.txt"
 			]
 		}
+	},
+	"peerDependencies": {
+		"@adonisjs/core": "^5.1.1",
+		"@adonisjs/lucid": "^14.0.0",
+		"@adonisjs/redis": "^7.0.0"
+	},
+	"peerDependenciesMeta": {
+		"@adonisjs/lucid": {
+			"optional": true
+		},
+		"@adonisjs/redis": {
+			"optional": true
+		}
 	}
 }
