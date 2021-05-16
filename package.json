@@ -1,6 +1,6 @@
 {
 	"name": "@kaperskyguru/adonis-cache",
-	"version": "2.0.7",
+	"version": "2.0.8-0",
 	"description": "Adonis Cache Package",
 	"main": "build/providers/CacheProvider",
 	"scripts": {
