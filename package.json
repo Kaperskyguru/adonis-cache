@@ -1,72 +1,96 @@
 {
-  "name": "@kaperskyguru/adonis-cache",
-  "version": "2.0.7",
-  "description": "Adonis Cache Package",
-  "main": "build/providers/CacheProvider",
-  "scripts": {
-    "mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "clean": "rm -r build",
-    "compile": "npm run clean && tsc",
-    "build": "npm run compile && npm run copyfiles",
-    "pretest": "npm run lint",
-    "test": "echo ''",
-    "copyfiles": "copyfiles \"README.md\" \"npm-audit.html\" \"instructions.js\" \"instructions.md\" build",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint . --ext=.ts",
-    "format": "prettier --write .",
-    "commit": "git-cz",
-    "release": "np",
-    "version": "npm run build",
-    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json Kaperskyguru/adonis-cache"
-  },
-  "keywords": [
-    "adonis",
-    "cache"
-  ],
-  "homepage": "https://github.com/kaperskyguru/adonis-cache#readme",
-  "author": "kaperskyguru",
-  "license": "MIT",
-  "devDependencies": {
-    "@adonisjs/core": "^5.1.6",
-    "@adonisjs/mrm-preset": "^2.4.0",
-    "@types/node": "^13.13.52",
-    "commitizen": "^4.2.4",
-    "copyfiles": "^2.4.1",
-    "doctoc": "^2.0.0",
-    "eslint": "^7.5.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-adonis": "^1.0.14",
-    "eslint-plugin-prettier": "^3.1.4",
-    "github-label-sync": "^2.0.0",
-    "husky": "^6.0.0",
-    "mrm": "^2.6.2",
-    "np": "^7.5.0",
-    "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.9.9"
-  },
-  "files": [
-    "build/adonis-typings",
-    "build/providers",
-    "build/src",
-    "build/config"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html && doctoc README.md --title='## Table of contents' && git add README.md",
-      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
-    }
-  },
-  "types": "build/adonis-typings/index.d.ts",
-  "np": {
-    "contents": ".",
-    "anyBranch": false
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kaperskyguru/kap-adonis-cache.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Kaperskyguru/kap-adonis-cache/issues"
-  }
+	"name": "@kaperskyguru/adonis-cache",
+	"version": "2.0.7",
+	"description": "Adonis Cache Package",
+	"main": "build/providers/CacheProvider",
+	"scripts": {
+		"mrm": "mrm --preset=@adonisjs/mrm-preset",
+		"clean": "rm -r build",
+		"compile": "npm run clean && tsc",
+		"build": "npm run compile && npm run copyfiles",
+		"pretest": "npm run lint",
+		"test": "echo ''",
+		"copyfiles": "copyfiles \"README.md\" \"npm-audit.html\" \"instructions.js\" \"instructions.md\" build",
+		"prepublishOnly": "npm run build",
+		"lint": "eslint . --ext=.ts",
+		"format": "prettier --write .",
+		"commit": "git-cz",
+		"release": "np",
+		"version": "npm run build",
+		"sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json Kaperskyguru/adonis-cache"
+	},
+	"keywords": [
+		"adonis",
+		"adonisjs",
+		"cache"
+	],
+	"homepage": "https://github.com/kaperskyguru/adonis-cache#readme",
+	"author": "Solomon Eseme",
+	"license": "MIT",
+	"devDependencies": {
+		"@adonisjs/core": "^5.1.6",
+		"@adonisjs/mrm-preset": "^2.4.0",
+		"@types/node": "^13.13.52",
+		"commitizen": "^4.2.4",
+		"copyfiles": "^2.4.1",
+		"doctoc": "^2.0.0",
+		"eslint": "^7.5.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-adonis": "^1.0.14",
+		"eslint-plugin-prettier": "^3.1.4",
+		"github-label-sync": "^2.0.0",
+		"husky": "^6.0.0",
+		"mrm": "^2.6.2",
+		"np": "^7.5.0",
+		"reflect-metadata": "^0.1.13",
+		"ts-node": "^8.6.2",
+		"typescript": "^3.9.9"
+	},
+	"files": [
+		"build/adonis-typings",
+		"build/providers",
+		"build/src",
+		"build/config"
+	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html && doctoc README.md --title='## Table of contents' && git add README.md",
+			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+		}
+	},
+	"types": "build/adonis-typings/index.d.ts",
+	"np": {
+		"contents": ".",
+		"anyBranch": false
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Kaperskyguru/kap-adonis-cache.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Kaperskyguru/kap-adonis-cache/issues"
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"adonisjs": {
+		"instructionsMd": "./build/instructions.md",
+		"types": "@kaperskyguru/adonis-cache",
+		"providers": [
+			"@kaperskyguru/adonis-cache"
+		],
+		"templates": {
+			"config": [
+				"cache.txt"
+			],
+			"contracts": [
+				"cache.txt"
+			]
+		}
+	}
 }
