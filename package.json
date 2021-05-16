@@ -51,7 +51,8 @@
 		"build/providers",
 		"build/src",
 		"build/config",
-		"build/instructions.js"
+		"build/instructions.js",
+		"build/templates"
 	],
 	"husky": {
 		"hooks": {
