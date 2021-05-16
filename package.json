@@ -90,9 +90,6 @@
 		"templates": {
 			"config": [
 				"cache.txt"
-			],
-			"contracts": [
-				"cache.txt"
 			]
 		}
 	},

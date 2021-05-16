@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-declare module '@ioc:Kaperskyguru/Adonis-cache' {
+declare module '@ioc:Kaperskyguru/Adonis-Cache' {
 	/**
 	 * Shape of adonis-cache config.
 	 */

@@ -41,14 +41,14 @@ class CacheLoader {
 	}
 
 	private _getConfig(name: String): string {
-		return this.app.use('Adonis/Src/Config').get(`cache.${name}`)
+		return this.app.container.use('Adonis/Core/Config').get(`cache.${name}`)
 	}
 	private _setConfig(name: String, value: any) {
 		const config = this._getConfig(name)
 		if (config) {
 			return
 		}
-		this.app.use('Adonis/Src/Config').set(`cache.${name}`, value)
+		this.app.container.use('Adonis/Core/Config').set(`cache.${name}`, value)
 	}
 }
 
