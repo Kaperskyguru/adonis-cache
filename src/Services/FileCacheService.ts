@@ -21,7 +21,7 @@ class FileCacheService extends FileCache implements ServiceInterface {
 		return !!value
 	}
 
-	public async set(name: string, data: any, duration: Number = 0): Promise<any> {
+	public async set(name: string, data: any, duration: number = 0): Promise<any> {
 		if (name && data) {
 			return await super.set(name, this.serialize(data), duration)
 		}
@@ -35,7 +35,7 @@ class FileCacheService extends FileCache implements ServiceInterface {
 		return false
 	}
 
-	public async update(name: string, data: any, duration: Number): Promise<any> {
+	public async update(name: string, data: any, duration: number): Promise<any> {
 		if (await this.delete(name)) {
 			return await this.set(name, data, duration)
 		} else return await this.set(name, data, duration)

@@ -21,7 +21,7 @@ class FileCache implements EngineInterface {
 		}
 	}
 
-	private async init() {
+	private init() {
 		!fs.existsSync(this.app.tmpPath(this.fileConfig.path)) &&
 			fs.mkdirSync(this.app.tmpPath(this.fileConfig.path), { recursive: true })
 	}
@@ -36,20 +36,49 @@ class FileCache implements EngineInterface {
 
 	private write(key: string, data: any) {
 		this.ensureCacheDirectoryExists(this.path())
-		fs.writeFileSync(this.path() + '/' + this.hashKey(key), data, 'binary')
+
+		fs.writeFileSync(this.path() + '/' + '_' + this.hashKey(key), data, 'binary')
 	}
 
-	private read(key: string) {
-		return fs.readFileSync(this.path() + '/' + this.hashKey(key), 'binary')
+	private writeWithTime(key: string, data: any, duration: number) {
+		this.ensureCacheDirectoryExists(this.path())
+		const currentDate = new Date()
+		const futureDate = new Date(currentDate.getTime() + duration * 60000)
+		const expiresIn = futureDate.getTime()
+		// Append Timestamp to the data
+
+		const newArr = {}
+
+		newArr['meta'] = { expiresIn }
+		newArr['data'] = data
+
+		fs.writeFileSync(this.path() + '/' + this.hashKey(key), JSON.stringify(newArr), 'binary')
+	}
+
+	private read(key: string): any {
+		const data = JSON.parse(fs.readFileSync(this.path() + '/' + this.hashKey(key), 'binary'))
+
+		if (data['meta']) {
+			const time = new Date(data['meta']['expiresIn']).getTime()
+			if (time < new Date().getTime()) {
+				return this.deleteFIle(key)
+			}
+		}
+		return JSON.stringify(data['data'])
 	}
 
 	public async get(name: string): Promise<any> {
-		if (this.isCacheExist(name)) {
-			return this.read(name)
+		if (await this.isCacheExist(name)) {
+			const data = this.read(name)
+			if (typeof data === 'boolean') {
+				return null
+			}
+			return data
 		}
+		return null
 	}
 
-	public async set(name: string, data: any, duration: Number): Promise<any> {
+	public async set(name: string, data: any, duration: number): Promise<any> {
 		if (!name) {
 			throw new Error('')
 		}
@@ -58,26 +87,19 @@ class FileCache implements EngineInterface {
 			throw new Error('')
 		}
 
-		console.log(duration)
+		if (duration !== 0) {
+			return this.writeWithTime(name, data, duration)
+		}
 
 		return this.write(name, data)
-
-		// Implement Set method
-		//   data = JSON.stringify(data);
-		//   if (duration == null) {
-		//     return await this._addCache(name, data);
-		//   }
-		//   return await this._addExpiredCache(name, data, duration);
 	}
 
 	public async flush(): Promise<void> {
 		throw new Error('Method not implemented.')
 	}
 
-	public async delete(name: String): Promise<any> {
-		// Implement Delete function
-		console.log(name)
-		return true
+	public async delete(key: string): Promise<Boolean> {
+		return this.deleteFIle(key)
 	}
 
 	private hashKey(key: string) {
@@ -87,6 +109,19 @@ class FileCache implements EngineInterface {
 	private async isCacheExist(key: string): Promise<Boolean> {
 		const path = this.path()
 		return fs.existsSync(path + '/' + this.hashKey(key))
+	}
+
+	private deleteFIle(key: string): Boolean {
+		try {
+			if (this.isCacheExist(key)) {
+				const path = this.path()
+				fs.unlinkSync(path + '/' + this.hashKey(key))
+				return true
+			}
+			return false
+		} catch (e) {
+			return false
+		}
 	}
 }
 export default FileCache

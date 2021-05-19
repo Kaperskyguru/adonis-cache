@@ -1,7 +1,7 @@
 interface ServiceInterface {
-	get(name: String): Promise<any>
-	set(name: String, data: any, duration: Number): Promise<any>
-	delete(name: String): Promise<Boolean>
+	get(name: string): Promise<any>
+	set(name: string, data: any, duration: number): Promise<any>
+	delete(name: string): Promise<Boolean>
 	flush(): Promise<void>
 }
 export default ServiceInterface
