@@ -8,5 +8,6 @@ interface CacheInterface {
 	rememberForever(name: string, callback: Function): Promise<any>
 	many(keys: Array<string>): Promise<object>
 	setMany(data: object, minutes: number): Promise<any>
+	flush(): Promise<void>
 }
 export default CacheInterface
