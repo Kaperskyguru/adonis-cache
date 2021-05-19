@@ -6,7 +6,7 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		super(config)
 	}
 
-	public async get(name: String): Promise<any> {
+	public async get(name: string): Promise<any> {
 		if (name) {
 			const value: string = await super.get(name)
 			if (value) {
@@ -15,7 +15,7 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		}
 	}
 
-	public async has(name: String): Promise<Boolean> {
+	public async has(name: string): Promise<Boolean> {
 		const value = await this.get(name)
 		if (value === null) {
 			return false
@@ -23,7 +23,7 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		return true
 	}
 
-	public async set(name: String, data: any, duration: Number): Promise<any> {
+	public async set(name: string, data: any, duration: number): Promise<any> {
 		if (name && data) {
 			data = JSON.stringify(data)
 			return await super.set(name, data, duration)
@@ -34,7 +34,7 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		}
 	}
 
-	public async delete(name: String): Promise<Boolean> {
+	public async delete(name: string): Promise<Boolean> {
 		if (await this.has(name)) {
 			await super.delete(name)
 			return true
@@ -42,13 +42,13 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		return false
 	}
 
-	public async update(name: String, data: any, duration: Number): Promise<any> {
+	public async update(name: string, data: any, duration: number): Promise<any> {
 		if (await this.delete(name)) {
 			return await this.set(name, data, duration)
 		} else return await this.set(name, data, duration)
 	}
 
-	public async remember(name: String, duration: Number, callback: Function): Promise<any> {
+	public async remember(name: string, duration: number, callback: Function): Promise<any> {
 		if (await this.has(name)) {
 			return await this.get(name)
 		} else {
@@ -58,7 +58,7 @@ class MemCacheService extends MemCache implements ServiceInterface {
 		}
 	}
 
-	public async rememberForever(name: String, callback: Function): Promise<any> {
+	public async rememberForever(name: string, callback: Function): Promise<any> {
 		if (await this.has(name)) {
 			return await this.get(name)
 		} else {

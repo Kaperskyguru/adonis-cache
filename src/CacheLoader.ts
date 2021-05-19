@@ -40,10 +40,10 @@ class CacheLoader {
 		return cache
 	}
 
-	private _getConfig(name: String): string {
+	private _getConfig(name: string): string {
 		return this.app.container.use('Adonis/Core/Config').get(`cache.${name}`)
 	}
-	private _setConfig(name: String, value: any) {
+	private _setConfig(name: string, value: any) {
 		const config = this._getConfig(name)
 		if (config) {
 			return

@@ -8,7 +8,7 @@ class DatabaseCache implements EngineInterface {
 	constructor(app: any) {
 		console.log(app)
 	}
-	public async get(name: String): Promise<any> {
+	public async get(name: string): Promise<any> {
 		if (name) {
 			// Implement Database get here
 			console.log(name)
@@ -19,7 +19,7 @@ class DatabaseCache implements EngineInterface {
 		}
 	}
 
-	public async set(name: String, data: any, duration: Number = this.defaultMinutes): Promise<any> {
+	public async set(name: string, data: any, duration: number = this.defaultMinutes): Promise<any> {
 		if (name && data) {
 			// Implement Set method
 			console.log(name, data, duration)
@@ -34,7 +34,7 @@ class DatabaseCache implements EngineInterface {
 		throw new Error('Method not implemented.')
 	}
 
-	public async delete(name: String): Promise<any> {
+	public async delete(name: string): Promise<any> {
 		// Implement Delete function
 		console.log(name)
 
