@@ -1,8 +1,8 @@
-import CacheInterface from '../Contracts/CacheInterface'
+import EngineInterface from '../Contracts/EngineInterface'
 
 // const DatabaseCache = use("DatabaseCache");
 
-class DatabaseCache implements CacheInterface {
+class DatabaseCache implements EngineInterface {
 	private defaultMinutes = 60
 
 	constructor(app: any) {

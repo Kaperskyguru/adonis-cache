@@ -10,36 +10,24 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
 		if (name) {
 			const value: string = await super.get(name)
 			if (value) {
-				return JSON.parse(value)
+				return this.deserialize(value)
 			}
 		}
 	}
 
 	public async has(name: string): Promise<Boolean> {
 		const value = await this.get(name)
-		if (value === null) {
-			return false
-		}
-		return true
+		return !value
 	}
 
 	public async set(name: string, data: any, duration: number): Promise<any> {
 		if (name && data) {
-			data = JSON.stringify(data)
-			return await super.set(name, data, duration)
-			//   if (duration == null) {
-			//     return await this._addCache(name, data);
-			//   }
-			//   return await this._addExpiredCache(name, data, duration);
+			return await super.set(name, this.serialize(data), duration)
 		}
 	}
 
 	public async delete(name: string): Promise<Boolean> {
-		if (await this.has(name)) {
-			await super.delete(name)
-			return true
-		}
-		return false
+		return await super.delete(name)
 	}
 
 	public async update(name: string, data: any, duration: number): Promise<any> {
@@ -50,6 +38,14 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
 
 	public async flush(): Promise<void> {
 		await super.flush()
+	}
+
+	private serialize(data: any): any {
+		return JSON.stringify(data)
+	}
+
+	private deserialize(data: any): any {
+		return JSON.parse(data)
 	}
 }
 module.exports = RedisCacheService

@@ -1,7 +1,11 @@
 interface CacheInterface {
-	get(name: String): Promise<any>
-	set(name: String, data: any, duration: Number): Promise<any>
-	delete(name: String): Promise<Boolean>
-	flush(): Promise<void>
+	get(name: string): Promise<any>
+	set(name: string, data: any, duration: number): Promise<any>
+	update(name: string, data: any, duration: number): Promise<any>
+	delete(name: string): Promise<Boolean>
+	remember(name: string, minutes: number, callback: Function): Promise<any>
+	rememberForever(name: string, callback: Function): Promise<any>
+	many(keys: Array<string>): Promise<object>
+	setMany(data: object, minutes: number): Promise<any>
 }
 export default CacheInterface

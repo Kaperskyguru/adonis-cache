@@ -1,7 +1,6 @@
+import CacheInterface from '../Contracts/CacheInterface'
 import ServiceInterface from '../Contracts/ServiceInterface'
-
-// @Implements<CacheInterface>()
-class Cache {
+class Cache implements CacheInterface {
 	private CacheService: ServiceInterface
 	constructor(cacheService: ServiceInterface) {
 		this.CacheService = cacheService
@@ -11,20 +10,19 @@ class Cache {
 		if (name) {
 			return await this.CacheService.get(name)
 		}
+		throw new Error('Specify a name')
 	}
 
 	public async has(name: string): Promise<Boolean> {
 		const value = await this.CacheService.get(name)
-		if (value === null) {
-			return false
-		}
-		return true
+		return !!value
 	}
 
-	public async set(name: string, data: any, duration: number): Promise<any> {
+	public async set(name: string, data: any, minutes: number = 0): Promise<any> {
 		if (name && data) {
-			return await this.CacheService.set(name, data, duration)
+			return await this.CacheService.set(name, data, minutes)
 		}
+		throw new Error('Specify a name and data to cache')
 	}
 
 	public async delete(name: string): Promise<Boolean> {
@@ -35,19 +33,19 @@ class Cache {
 		return false
 	}
 
-	public async update(name: string, data: any, duration: number): Promise<any> {
+	public async update(name: string, data: any, minutes: number = 0): Promise<any> {
 		if (await this.has(name)) {
 			await this.delete(name)
-			return await this.set(name, data, duration)
-		} else return await this.set(name, data, duration)
+			return await this.set(name, data, minutes)
+		} else return await this.set(name, data, minutes)
 	}
 
-	public async remember(name: string, duration: number, callback: Function): Promise<any> {
+	public async remember(name: string, minutes: number, callback: Function): Promise<any> {
 		if (await this.has(name)) {
 			return await this.get(name)
 		} else {
 			const data = await callback()
-			await this.set(name, data, duration)
+			await this.set(name, data, minutes)
 			return data
 		}
 	}
@@ -57,7 +55,7 @@ class Cache {
 			return await this.get(name)
 		} else {
 			const data = await callback()
-			await this.set(name, data, 0)
+			await this.set(name, data)
 			return data
 		}
 	}
@@ -71,12 +69,27 @@ class Cache {
 		return mappedValues
 	}
 
-	public async setMany(data: object, minutes: number) {
+	public async setMany(data: object, minutes: number = 0): Promise<any> {
 		for (let prop in data) {
 			await this.set(prop, data[prop], minutes)
 		}
-		return
+		return data
 	}
 }
+
+/*
+
+    public function get($key) {}
+    public function many(array $keys) {}
+    public function put($key, $value, $seconds) {}
+    public function putMany(array $values, $seconds) {}
+    public function increment($key, $value = 1) {}
+    public function decrement($key, $value = 1) {}
+    public function forever($key, $value) {}
+    public function forget($key) {}
+    public function flush() {}
+    public function getPrefix() {}
+
+	*/
 
 module.exports = Cache

@@ -1,8 +1,8 @@
-import CacheInterface from '../Contracts/CacheInterface'
+import EngineInterface from '../Contracts/EngineInterface'
 
 // const MemCache = use("MemCache");
 
-class MemCache implements CacheInterface {
+class MemCache implements EngineInterface {
 	private defaultMinutes = 60
 
 	constructor(app: any) {

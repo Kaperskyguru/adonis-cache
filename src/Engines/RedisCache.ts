@@ -1,29 +1,74 @@
-import CacheInterface from '../Contracts/CacheInterface'
+import EngineInterface from '../Contracts/EngineInterface'
+import {
+	RedisManagerContract,
+	RedisConnectionContract,
+	RedisClusterConnectionContract,
+} from '@ioc:Adonis/Addons/Redis'
 
-class RedisCache implements CacheInterface {
+class RedisCache implements EngineInterface {
 	// private defaultMinutes = 60;
-	private Redis: any
+	private redis: RedisManagerContract
+	private config: any
+
+	/**
+	 * Custom connection or query client
+	 */
+	private connection?: string | RedisConnectionContract | RedisClusterConnectionContract
 
 	constructor(app: any) {
-		this.Redis = app.container.use('Adonis/Addons/Redis')
-		if (this.Redis === null) throw new Error(`InvalidArgumentException: Adonis Redis not installed`)
+		if (!app.container.hasBinding('Adonis/Addons/Redis')) {
+			throw new Error('"@adonisjs/redis" is required to use the "redis" token provider')
+		}
+
+		this.redis = app.container.use('Adonis/Addons/Redis')
+		this.config = app.container.use('Adonis/Core/Config').get('redis')
+	}
+
+	/**
+	 * Returns the singleton instance of the redis connection
+	 */
+	private getRedisConnection(): RedisConnectionContract | RedisClusterConnectionContract {
+		/**
+		 * Use custom connection if defined
+		 */
+		if (this.connection) {
+			return typeof this.connection === 'string'
+				? this.redis.connection(this.connection)
+				: this.connection
+		}
+
+		/**
+		 * Config must have a connection defined
+		 */
+		if (!this.config.connections) {
+			throw new Error(
+				'Missing "connections" property for redis provider inside "config/redis" file',
+			)
+		}
+
+		return this.redis.connection(this.config.connections)
+	}
+
+	/**
+	 * Define custom connection
+	 */
+	public setConnection(
+		connection: string | RedisConnectionContract | RedisClusterConnectionContract,
+	): this {
+		this.connection = connection
+		return this
 	}
 
 	public async get(name: string): Promise<any> {
 		if (name) {
-			// Implement Database get here
-			const value = await this.Redis.get(name)
-			if (value) {
-				return this.deserialize(value)
-			}
+			const value = await this.getRedisConnection().get(name)
+			return value ? value : null
 		}
 	}
 
 	public async set(name: string, data: any, duration: number): Promise<any> {
 		if (name && data) {
-			// Implement Set method
-			data = this.serialize(data)
-			if (duration) {
+			if (duration === 0) {
 				return await this._addCache(name, data)
 			}
 			return await this._addExpiredCache(name, data, duration)
@@ -31,32 +76,23 @@ class RedisCache implements CacheInterface {
 	}
 
 	public async delete(name: string): Promise<Boolean> {
-		// Implement Delete function
-		await this.Redis.del(name)
+		await this.getRedisConnection().del(name)
 		return true
 	}
 
 	public async flush(): Promise<void> {
-		await this.Redis.flushdb()
+		await this.getRedisConnection().flushdb()
 	}
 
 	private async _addExpiredCache(name: string, data: any, duration: number): Promise<any> {
 		let expiration = Math.floor(duration * 60)
-		await this.Redis.set(name, data, 'EX', expiration)
+		await this.getRedisConnection().set(name, data, 'EX', expiration)
 		return data
 	}
 
 	private async _addCache(name: string, data: any): Promise<any> {
-		await this.Redis.set(name, data)
+		await this.getRedisConnection().set(name, data)
 		return data
-	}
-
-	private serialize(data: any): any {
-		return JSON.stringify(data)
-	}
-
-	private deserialize(data: any): any {
-		return JSON.parse(data)
 	}
 }
 export default RedisCache

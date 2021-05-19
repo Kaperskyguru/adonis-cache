@@ -2,39 +2,32 @@ import ServiceInterface from '../Contracts/ServiceInterface'
 import FileCache from '../Engines/FileCache'
 
 class FileCacheService extends FileCache implements ServiceInterface {
-	constructor(config: any) {
-		super(config)
+	constructor(app: any) {
+		super(app)
 	}
 
-	public async get(name: String): Promise<any> {
+	public async get(name: string): Promise<any> {
 		if (name) {
-			const value: string = await super.get(name)
+			const value = await super.get(name)
 			if (value) {
-				return JSON.parse(value)
+				return this.deserialize(value)
 			}
+			return null
 		}
 	}
 
-	public async has(name: String): Promise<Boolean> {
+	public async has(name: string): Promise<Boolean> {
 		const value = await this.get(name)
-		if (value === null) {
-			return false
-		}
-		return true
+		return !!value
 	}
 
-	public async set(name: String, data: any, duration: Number): Promise<any> {
+	public async set(name: string, data: any, duration: Number = 0): Promise<any> {
 		if (name && data) {
-			data = JSON.stringify(data)
-			return await super.set(name, data, duration)
-			//   if (duration == null) {
-			//     return await this._addCache(name, data);
-			//   }
-			//   return await this._addExpiredCache(name, data, duration);
+			return await super.set(name, this.serialize(data), duration)
 		}
 	}
 
-	public async delete(name: String): Promise<Boolean> {
+	public async delete(name: string): Promise<Boolean> {
 		if (await this.has(name)) {
 			await super.delete(name)
 			return true
@@ -42,30 +35,18 @@ class FileCacheService extends FileCache implements ServiceInterface {
 		return false
 	}
 
-	public async update(name: String, data: any, duration: Number): Promise<any> {
+	public async update(name: string, data: any, duration: Number): Promise<any> {
 		if (await this.delete(name)) {
 			return await this.set(name, data, duration)
 		} else return await this.set(name, data, duration)
 	}
 
-	public async remember(name: String, duration: Number, callback: Function): Promise<any> {
-		if (await this.has(name)) {
-			return await this.get(name)
-		} else {
-			const data = await callback()
-			await this.set(name, data, duration)
-			return data
-		}
+	private serialize(data: any): any {
+		return JSON.stringify(data)
 	}
 
-	public async rememberForever(name: String, callback: Function): Promise<any> {
-		if (await this.has(name)) {
-			return await this.get(name)
-		} else {
-			const data = await callback()
-			await this.set(name, data, 50000000000000)
-			return data
-		}
+	private deserialize(data: any): any {
+		return JSON.parse(data)
 	}
 }
 module.exports = FileCacheService

@@ -30,6 +30,8 @@
 	"devDependencies": {
 		"@adonisjs/core": "^5.1.6",
 		"@adonisjs/mrm-preset": "^2.4.0",
+		"@adonisjs/redis": "7.0.2",
+		"@adonisjs/repl": "^3.1.2",
 		"@types/node": "^13.13.52",
 		"commitizen": "^4.2.4",
 		"copyfiles": "^2.4.1",
@@ -90,20 +92,22 @@
 		"templates": {
 			"config": [
 				"cache.txt"
+			],
+			"contract": [
+				"cache.txt"
 			]
 		}
 	},
 	"peerDependencies": {
 		"@adonisjs/core": "^5.1.1",
-		"@adonisjs/lucid": "^14.0.0",
-		"@adonisjs/redis": "^7.0.0"
+		"@adonisjs/redis": "^7.0.2"
 	},
 	"peerDependenciesMeta": {
-		"@adonisjs/lucid": {
-			"optional": true
-		},
 		"@adonisjs/redis": {
 			"optional": true
 		}
+	},
+	"dependencies": {
+		"crypto": "^1.0.1"
 	}
 }
