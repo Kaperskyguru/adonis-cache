@@ -35,6 +35,10 @@ class FileCacheService extends FileCache implements ServiceInterface {
 		return false
 	}
 
+	public async flush(): Promise<void> {
+		return await super.flush()
+	}
+
 	public async update(name: string, data: any, duration: number): Promise<any> {
 		if (await this.delete(name)) {
 			return await this.set(name, data, duration)

@@ -20,7 +20,7 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
 		return !value
 	}
 
-	public async set(name: string, data: any, duration: number): Promise<any> {
+	public async set(name: string, data: any, duration: number = 0): Promise<any> {
 		if (name && data) {
 			return await super.set(name, this.serialize(data), duration)
 		}

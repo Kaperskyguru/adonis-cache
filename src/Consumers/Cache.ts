@@ -1,33 +1,33 @@
 import CacheInterface from '../Contracts/CacheInterface'
 import ServiceInterface from '../Contracts/ServiceInterface'
 class Cache implements CacheInterface {
-	private CacheService: ServiceInterface
+	private cacheService: ServiceInterface
 	constructor(cacheService: ServiceInterface) {
-		this.CacheService = cacheService
+		this.cacheService = cacheService
 	}
 
 	public async get(name: string): Promise<any> {
 		if (name) {
-			return await this.CacheService.get(name)
+			return await this.cacheService.get(name)
 		}
 		throw new Error('Specify a name')
 	}
 
 	public async has(name: string): Promise<Boolean> {
-		const value = await this.CacheService.get(name)
+		const value = await this.cacheService.get(name)
 		return !!value
 	}
 
-	public async set(name: string, data: any, minutes: number = 0): Promise<any> {
+	public async set(name: string, data: any, minutes: number): Promise<any> {
 		if (name && data) {
-			return await this.CacheService.set(name, data, minutes)
+			return await this.cacheService.set(name, data, minutes)
 		}
 		throw new Error('Specify a name and data to cache')
 	}
 
 	public async delete(name: string): Promise<Boolean> {
 		if (await this.has(name)) {
-			await this.CacheService.delete(name)
+			await this.cacheService.delete(name)
 			return true
 		}
 		return false
@@ -55,7 +55,7 @@ class Cache implements CacheInterface {
 			return await this.get(name)
 		} else {
 			const data = await callback()
-			await this.set(name, data)
+			await this.cacheService.set(name, data)
 			return data
 		}
 	}
@@ -74,6 +74,17 @@ class Cache implements CacheInterface {
 			await this.set(prop, data[prop], minutes)
 		}
 		return data
+	}
+
+	public async flush(): Promise<void> {
+		return await this.cacheService.flush()
+	}
+
+	public async forever(key: string, values: any): Promise<any> {
+		if (key && values) {
+			return await this.cacheService.set(key, values)
+		}
+		throw new Error('Specify a name and data to cache')
 	}
 }
 

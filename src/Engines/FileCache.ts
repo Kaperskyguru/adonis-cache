@@ -52,11 +52,17 @@ class FileCache implements EngineInterface {
 		newArr['meta'] = { expiresIn }
 		newArr['data'] = data
 
-		fs.writeFileSync(this.path() + '/' + this.hashKey(key), JSON.stringify(newArr), 'binary')
+		fs.writeFileSync(
+			this.path() + '/' + this.hashKey(key) + '.cache',
+			JSON.stringify(newArr),
+			'binary',
+		)
 	}
 
 	private read(key: string): any {
-		const data = JSON.parse(fs.readFileSync(this.path() + '/' + this.hashKey(key), 'binary'))
+		const data = JSON.parse(
+			fs.readFileSync(this.path() + '/' + this.hashKey(key) + '.cache', 'binary'),
+		)
 
 		if (data['meta']) {
 			const time = new Date(data['meta']['expiresIn']).getTime()
@@ -80,11 +86,11 @@ class FileCache implements EngineInterface {
 
 	public async set(name: string, data: any, duration: number): Promise<any> {
 		if (!name) {
-			throw new Error('')
+			throw new Error('Cache key not provided')
 		}
 
 		if (!data) {
-			throw new Error('')
+			throw new Error('Cache data not provided')
 		}
 
 		if (duration !== 0) {
@@ -95,7 +101,7 @@ class FileCache implements EngineInterface {
 	}
 
 	public async flush(): Promise<void> {
-		throw new Error('Method not implemented.')
+		fs.rmdirSync(this.path(), { recursive: true })
 	}
 
 	public async delete(key: string): Promise<Boolean> {
