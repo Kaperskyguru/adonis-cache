@@ -114,7 +114,7 @@ class FileCache implements EngineInterface {
 
 	private async isCacheExist(key: string): Promise<Boolean> {
 		const path = this.path()
-		return fs.existsSync(path + '/' + this.hashKey(key))
+		return fs.existsSync(path + '/' + this.hashKey(key) +  '.cache')
 	}
 
 	private deleteFIle(key: string): Boolean {
