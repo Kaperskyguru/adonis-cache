@@ -45,7 +45,7 @@ CACHE_DRIVER=file // defaults to FILE
 ## Usage
 
 ```ts
-import Cache from '@ioc:Kaperskyguru/Adonis-Cache'
+import Cache from '@ioc:Kaperskyguru/Adonis-cache'
 
 let posts = await Cache.remember('_posts_', 60, async function () {
 	return await Post.all()
