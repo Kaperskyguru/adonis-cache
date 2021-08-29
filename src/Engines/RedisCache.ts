@@ -46,7 +46,7 @@ class RedisCache implements EngineInterface {
 			)
 		}
 
-		return this.redis.connection(this.config.connections)
+		return this.redis.connection()
 	}
 
 	/**
