@@ -1,5 +1,5 @@
 import EngineInterface from '../Contracts/EngineInterface'
-const fs = require('fs')
+import fs from 'fs'
 const sha256 = require('crypto-js/sha256')
 
 // const FileCache = use("FileCache");
@@ -117,9 +117,9 @@ class FileCache implements EngineInterface {
 		return fs.existsSync(path + '/' + this.hashKey(key) +  '.cache')
 	}
 
-	private deleteFIle(key: string): Boolean {
+	private async deleteFIle(key: string): Promise<Boolean> {
 		try {
-			if (this.isCacheExist(key)) {
+			if (await this.isCacheExist(key)) {
 				const path = this.path()
 				fs.unlinkSync(path + '/' + this.hashKey(key) + '.cache')
 				return true
