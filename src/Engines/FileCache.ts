@@ -121,7 +121,7 @@ class FileCache implements EngineInterface {
 		try {
 			if (this.isCacheExist(key)) {
 				const path = this.path()
-				fs.unlinkSync(path + '/' + this.hashKey(key))
+				fs.unlinkSync(path + '/' + this.hashKey(key) + '.cache')
 				return true
 			}
 			return false
