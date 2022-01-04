@@ -5,7 +5,7 @@
 	"main": "build/providers/CacheProvider",
 	"scripts": {
 		"mrm": "mrm --preset=@adonisjs/mrm-preset",
-		"clean": "rm -r build",
+		"clean": "rm -rf build",
 		"compile": "npm run clean && tsc",
 		"build": "npm run compile && npm run copyfiles",
 		"pretest": "npm run lint",
