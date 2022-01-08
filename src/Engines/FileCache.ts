@@ -1,15 +1,14 @@
 import EngineInterface from '../Contracts/EngineInterface'
 import fs from 'fs'
-const sha256 = require('crypto-js/sha256')
-
-// const FileCache = use("FileCache");
 
 class FileCache implements EngineInterface {
 	private fileConfig: any
 	private app: any
+	private hash: any;
 
 	constructor(app: any) {
 		this.app = app
+		this.hash = app.container.use('Adonis/Core/Hash');
 		try {
 			this.fileConfig = app.container.use('Adonis/Core/Config').get('cache').drivers.file
 			if (!this.fileConfig) {
@@ -109,7 +108,7 @@ class FileCache implements EngineInterface {
 	}
 
 	private hashKey(key: string) {
-		return sha256(key) + ''
+		return this.hash.make(key + '');
 	}
 
 	private async isCacheExist(key: string): Promise<Boolean> {
