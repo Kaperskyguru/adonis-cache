@@ -106,8 +106,5 @@
 		"@adonisjs/redis": {
 			"optional": true
 		}
-	},
-	"dependencies": {
-		"crypto": "^1.0.1"
 	}
 }
