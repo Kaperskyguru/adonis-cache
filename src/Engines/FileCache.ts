@@ -4,11 +4,11 @@ import fs from 'fs'
 class FileCache implements EngineInterface {
 	private fileConfig: any
 	private app: any
-	private hash: any;
+	private hash: any
 
 	constructor(app: any) {
 		this.app = app
-		this.hash = app.container.use('Adonis/Core/Hash');
+		this.hash = app.container.use('Adonis/Core/Hash')
 		try {
 			this.fileConfig = app.container.use('Adonis/Core/Config').get('cache').drivers.file
 			if (!this.fileConfig) {
@@ -108,12 +108,12 @@ class FileCache implements EngineInterface {
 	}
 
 	private hashKey(key: string) {
-		return this.hash.make(key + '');
+		return this.hash.make(key + '')
 	}
 
 	private async isCacheExist(key: string): Promise<Boolean> {
 		const path = this.path()
-		return fs.existsSync(path + '/' + this.hashKey(key) +  '.cache')
+		return fs.existsSync(path + '/' + this.hashKey(key) + '.cache')
 	}
 
 	private async deleteFIle(key: string): Promise<Boolean> {

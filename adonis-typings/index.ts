@@ -16,7 +16,7 @@ declare module '@ioc:Kaperskyguru/Adonis-Cache' {
 		drivers: object
 	}
 
-	export interface CacheInteface {
+	export interface CacheInterface {
 		get(name: string): Promise<any>
 		set(name: string, data: any, duration: number): Promise<any>
 		forever(name: string, data: any): Promise<any>
@@ -28,6 +28,6 @@ declare module '@ioc:Kaperskyguru/Adonis-Cache' {
 		setMany(data: object, minutes: number): Promise<any>
 		flush(): Promise<void>
 	}
-	const Cache: CacheInteface
+	const Cache: CacheInterface
 	export default Cache
 }
