@@ -14,6 +14,6 @@ const Cache = use('Cache')
 const Cache = use('Cache')
 
 Cache.get('posts').then((post) => {
-	res.json(post)
+  res.json(post)
 })
 ```
