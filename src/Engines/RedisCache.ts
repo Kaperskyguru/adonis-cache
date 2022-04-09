@@ -42,7 +42,7 @@ class RedisCache implements EngineInterface {
 		 */
 		if (!this.config.connections) {
 			throw new Error(
-				'Missing "connections" property for redis provider inside "config/redis" file'
+				'Missing "connections" property for redis provider inside "config/redis" file',
 			)
 		}
 
@@ -53,7 +53,7 @@ class RedisCache implements EngineInterface {
 	 * Define custom connection
 	 */
 	public setConnection(
-		connection: string | RedisConnectionContract | RedisClusterConnectionContract
+		connection: string | RedisConnectionContract | RedisClusterConnectionContract,
 	): this {
 		this.connection = connection
 		return this
