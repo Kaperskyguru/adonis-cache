@@ -54,13 +54,13 @@ class FileCache implements EngineInterface {
 		fs.writeFileSync(
 			this.path() + '/' + this.hashKey(key) + '.cache',
 			JSON.stringify(newArr),
-			'binary',
+			'binary'
 		)
 	}
 
 	private read(key: string): any {
 		const data = JSON.parse(
-			fs.readFileSync(this.path() + '/' + this.hashKey(key) + '.cache', 'binary'),
+			fs.readFileSync(this.path() + '/' + this.hashKey(key) + '.cache', 'binary')
 		)
 
 		if (data['meta']) {
