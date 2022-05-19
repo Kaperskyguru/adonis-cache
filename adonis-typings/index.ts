@@ -17,6 +17,7 @@ declare module '@ioc:Kaperskyguru/Adonis-Cache' {
   }
 
   export interface CacheInterface {
+    has(name: string): Promise<boolean>
     get(name: string): Promise<any>
     set(name: string, data: any, duration: number): Promise<any>
     forever(name: string, data: any): Promise<any>
