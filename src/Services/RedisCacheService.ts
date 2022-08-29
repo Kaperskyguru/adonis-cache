@@ -22,18 +22,18 @@ class RedisCacheService extends RedisCache implements ServiceInterface {
 
   public async set(name: string, data: any, duration: number = 0): Promise<any> {
     if (name && data) {
-      return await super.set(name, this.serialize(data), duration)
+      return super.set(name, this.serialize(data), duration)
     }
   }
 
   public async delete(name: string): Promise<Boolean> {
-    return await super.delete(name)
+    return super.delete(name)
   }
 
   public async update(name: string, data: any, duration: number): Promise<any> {
     if (await this.delete(name)) {
-      return await this.set(name, data, duration)
-    } else return await this.set(name, data, duration)
+      return this.set(name, data, duration)
+    } else return this.set(name, data, duration)
   }
 
   public async flush(): Promise<void> {
