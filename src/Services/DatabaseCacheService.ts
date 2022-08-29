@@ -26,7 +26,7 @@ class DatabaseCacheService extends DatabaseCache implements ServiceInterface {
   public async set(name: string, data: any, duration: number): Promise<any> {
     if (name && data) {
       data = JSON.stringify(data)
-      return await super.set(name, data, duration)
+      return super.set(name, data, duration)
       //   if (duration == null) {
       //     return await this._addCache(name, data);
       //   }
@@ -44,13 +44,13 @@ class DatabaseCacheService extends DatabaseCache implements ServiceInterface {
 
   public async update(name: string, data: any, duration: number): Promise<any> {
     if (await this.delete(name)) {
-      return await this.set(name, data, duration)
-    } else return await this.set(name, data, duration)
+      return this.set(name, data, duration)
+    } else return this.set(name, data, duration)
   }
 
   public async remember(name: string, duration: number, callback: Function): Promise<any> {
     if (await this.has(name)) {
-      return await this.get(name)
+      return this.get(name)
     } else {
       const data = await callback()
       await this.set(name, data, duration)
@@ -60,7 +60,7 @@ class DatabaseCacheService extends DatabaseCache implements ServiceInterface {
 
   public async rememberForever(name: string, callback: Function): Promise<any> {
     if (await this.has(name)) {
-      return await this.get(name)
+      return this.get(name)
     } else {
       const data = await callback()
       await this.set(name, data, 50000000000000)
