@@ -69,9 +69,9 @@ class RedisCache implements EngineInterface {
   public async set(name: string, data: any, duration: number): Promise<any> {
     if (name && data) {
       if (duration === 0) {
-        return await this._addCache(name, data)
+        return this._addCache(name, data)
       }
-      return await this._addExpiredCache(name, data, duration)
+      return this._addExpiredCache(name, data, duration)
     }
   }
 

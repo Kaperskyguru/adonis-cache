@@ -8,7 +8,7 @@ class Cache implements CacheInterface {
 
   public async get(name: string): Promise<any> {
     if (name) {
-      return await this.cacheService.get(name)
+      return this.cacheService.get(name)
     }
     throw new Error('Specify a name')
   }
@@ -20,7 +20,7 @@ class Cache implements CacheInterface {
 
   public async set(name: string, data: any, minutes: number): Promise<any> {
     if (name && data) {
-      return await this.cacheService.set(name, data, minutes)
+      return this.cacheService.set(name, data, minutes)
     }
     throw new Error('Specify a name and data to cache')
   }
@@ -36,13 +36,13 @@ class Cache implements CacheInterface {
   public async update(name: string, data: any, minutes: number = 0): Promise<any> {
     if (await this.has(name)) {
       await this.delete(name)
-      return await this.set(name, data, minutes)
-    } else return await this.set(name, data, minutes)
+      return this.set(name, data, minutes)
+    } else return this.set(name, data, minutes)
   }
 
   public async remember(name: string, minutes: number, callback: Function): Promise<any> {
     if (await this.has(name)) {
-      return await this.get(name)
+      return this.get(name)
     } else {
       const data = await callback()
       await this.set(name, data, minutes)
@@ -52,7 +52,7 @@ class Cache implements CacheInterface {
 
   public async rememberForever(name: string, callback: Function): Promise<any> {
     if (await this.has(name)) {
-      return await this.get(name)
+      return this.get(name)
     } else {
       const data = await callback()
       await this.cacheService.set(name, data)
@@ -77,12 +77,12 @@ class Cache implements CacheInterface {
   }
 
   public async flush(): Promise<void> {
-    return await this.cacheService.flush()
+    return this.cacheService.flush()
   }
 
   public async forever(key: string, values: any): Promise<any> {
     if (key && values) {
-      return await this.cacheService.set(key, values)
+      return this.cacheService.set(key, values)
     }
     throw new Error('Specify a name and data to cache')
   }
