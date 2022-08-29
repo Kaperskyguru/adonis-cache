@@ -33,13 +33,13 @@ class FileCache implements EngineInterface {
     !fs.existsSync(path) && fs.mkdirSync(path, { recursive: true })
   }
 
-  private write(key: string, data: any) {
+  private async write(key: string, data: any) {
     this.ensureCacheDirectoryExists(this.path())
 
-    fs.writeFileSync(this.path() + '/' + '_' + this.hashKey(key), data, 'binary')
+    fs.writeFileSync(this.path() + '/' + '_' + (await this.hashKey(key) ), data, 'binary')
   }
 
-  private writeWithTime(key: string, data: any, duration: number) {
+  private async writeWithTime(key: string, data: any, duration: number) {
     this.ensureCacheDirectoryExists(this.path())
     const currentDate = new Date()
     const futureDate = new Date(currentDate.getTime() + duration * 60000)
@@ -52,15 +52,15 @@ class FileCache implements EngineInterface {
     newArr['data'] = data
 
     fs.writeFileSync(
-      this.path() + '/' + this.hashKey(key) + '.cache',
+      this.path() + '/' + (await this.hashKey(key) ) + '.cache',
       JSON.stringify(newArr),
       'binary'
     )
   }
 
-  private read(key: string): any {
+  private async read(key: string): any {
     const data = JSON.parse(
-      fs.readFileSync(this.path() + '/' + this.hashKey(key) + '.cache', 'binary')
+      fs.readFileSync(this.path() + '/' + (await this.hashKey(key) ) + '.cache', 'binary')
     )
 
     if (data['meta']) {
@@ -107,20 +107,20 @@ class FileCache implements EngineInterface {
     return this.deleteFIle(key)
   }
 
-  private hashKey(key: string) {
+  private async hashKey(key: string) {
     return this.hash.make(key + '')
   }
 
   private async isCacheExist(key: string): Promise<Boolean> {
     const path = this.path()
-    return fs.existsSync(path + '/' + this.hashKey(key) + '.cache')
+    return fs.existsSync(path + '/' + ( await this.hashKey(key) ) + '.cache')
   }
 
   private async deleteFIle(key: string): Promise<Boolean> {
     try {
       if (await this.isCacheExist(key)) {
         const path = this.path()
-        fs.unlinkSync(path + '/' + this.hashKey(key) + '.cache')
+        fs.unlinkSync(path + '/' + ( await this.hashKey(key) ) + '.cache')
         return true
       }
       return false
