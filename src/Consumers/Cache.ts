@@ -8,7 +8,7 @@ class Cache implements CacheInterface {
 
   public async get(name: string): Promise<any> {
     if (name) {
-      return await this.cacheService.get(name)
+      return this.cacheService.get(name)
     }
     throw new Error('Specify a name')
   }
