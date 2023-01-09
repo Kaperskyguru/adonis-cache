@@ -124,7 +124,7 @@
       "config": [
         "cache.txt"
       ],
-      "contract": [
+      "contracts": [
         "cache.txt"
       ]
     }
